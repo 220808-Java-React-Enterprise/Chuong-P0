@@ -1,6 +1,6 @@
-package com.revature.yolp.ui;
+package com.revature.chuong.bookstore.ui;
 
-import com.revature.yolp.models.User;
+import com.revature.chuong.bookstore.models.User;
 
 public class MainMenu implements IMenu {
     private final User user;

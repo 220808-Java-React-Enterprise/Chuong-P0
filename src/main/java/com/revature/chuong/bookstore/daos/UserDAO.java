@@ -1,6 +1,6 @@
-package com.revature.yolp.daos;
+package com.revature.chuong.bookstore.daos;
 
-import com.revature.yolp.models.User;
+import com.revature.chuong.bookstore.models.User;
 
 import java.io.*;
 import java.util.ArrayList;

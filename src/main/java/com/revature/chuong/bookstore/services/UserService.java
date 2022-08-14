@@ -1,8 +1,8 @@
-package com.revature.yolp.services;
+package com.revature.chuong.bookstore.services;
 
-import com.revature.yolp.daos.UserDAO;
-import com.revature.yolp.models.User;
-import com.revature.yolp.utils.custom_exceptions.InvalidUserException;
+import com.revature.chuong.bookstore.daos.UserDAO;
+import com.revature.chuong.bookstore.models.User;
+import com.revature.chuong.bookstore.utils.custom_exceptions.InvalidUserException;
 
 import java.util.List;
 

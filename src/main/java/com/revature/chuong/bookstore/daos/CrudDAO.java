@@ -1,4 +1,4 @@
-package com.revature.yolp.daos;
+package com.revature.chuong.bookstore.daos;
 
 import java.io.IOException;
 import java.util.List;

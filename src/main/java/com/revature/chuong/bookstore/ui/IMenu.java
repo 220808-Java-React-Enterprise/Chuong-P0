@@ -1,4 +1,4 @@
-package com.revature.yolp.ui;
+package com.revature.chuong.bookstore.ui;
 
 public interface IMenu {
     void start();
