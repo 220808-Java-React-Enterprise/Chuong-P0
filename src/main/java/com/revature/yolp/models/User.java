@@ -1,4 +1,4 @@
-package com.revature.chuong.bookstore.models;
+package com.revature.yolp.models;
 
 public class User {
     private String id;
@@ -14,6 +14,13 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = password;
+    }
+
+    public User(String id, String username, String password, String role) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
 
     public String getId() {

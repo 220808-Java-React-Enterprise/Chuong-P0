@@ -1,4 +1,4 @@
-package com.revature.chuong.bookstore.models;
+package com.revature.yolp.models;
 
 public class Restaurant {
     private String id;

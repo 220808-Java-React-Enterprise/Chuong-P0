@@ -1,4 +1,4 @@
-package com.revature.chuong.bookstore.utils.custom_exceptions;
+package com.revature.yolp.utils.custom_exceptions;
 
 public class InvalidUserException extends RuntimeException {
     public InvalidUserException() {

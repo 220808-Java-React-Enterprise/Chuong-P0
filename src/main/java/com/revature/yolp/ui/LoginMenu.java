@@ -1,8 +1,9 @@
-package com.revature.chuong.bookstore.ui;
+package com.revature.yolp.ui;
 
-import com.revature.chuong.bookstore.models.User;
-import com.revature.chuong.bookstore.utils.custom_exceptions.InvalidUserException;
-import com.revature.chuong.bookstore.services.UserService;
+import com.revature.yolp.daos.UserDAO;
+import com.revature.yolp.models.User;
+import com.revature.yolp.services.UserService;
+import com.revature.yolp.utils.custom_exceptions.InvalidUserException;
 
 import java.util.List;
 import java.util.Scanner;
@@ -38,7 +39,7 @@ public class LoginMenu implements IMenu {
                     case "2":
                         User user = signup();
                         userService.register(user);
-                        new MainMenu(user).start();
+                        new MainMenu(user, new UserService(new UserDAO())).start();
                         break;
                     case "x":
                         System.out.println("\nGoodbye!");
@@ -52,16 +53,38 @@ public class LoginMenu implements IMenu {
     }
 
     private void login() {
-        System.out.println("\nNeeds implementation...");
-        List<String> usernames = userService.getAllUsernames();
+        String username = "";
+        String password = "";
+        Scanner scan = new Scanner(System.in);
 
-        System.out.println(usernames.contains("bduong0929"));
+        System.out.println("\nLogging in...");
+
+        exit: {
+            while (true) {
+                System.out.print("\nEnter username: ");
+                username = scan.nextLine();
+
+                System.out.print("\nEnter password: ");
+                password = scan.nextLine();
+
+                try {
+                    User user = userService.login(username, password);
+                    if (user.getRole().equals("ADMIN"))
+                        new AdminMenu(user, new UserService(new UserDAO())).start();
+                    else new MainMenu(user, new UserService(new UserDAO())).start();
+                    break exit;
+                } catch (InvalidUserException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
     }
 
     private User signup() {
         String username = "";
         String password = "";
-        User user = new User();
+        String password2 = "";
+        User user;
         Scanner scan = new Scanner(System.in);
 
         System.out.println("\nCreating account...");
@@ -77,6 +100,7 @@ public class LoginMenu implements IMenu {
 
                         try {
                             userService.isValidUsername(username);
+                            userService.isDuplicateUsername(username);
                             break usernameExit;
                         } catch (InvalidUserException e) {
                             System.out.println(e.getMessage());
@@ -92,6 +116,11 @@ public class LoginMenu implements IMenu {
                             password = scan.nextLine();
 
                             userService.isValidPassword(password);
+
+                            System.out.print("\nRe eneter password: ");
+                            password2 = scan.nextLine();
+
+                            userService.isSamePassword(password, password2);
                             break passwordExit;
                         } catch (InvalidUserException e) {
                             System.out.println(e.getMessage());

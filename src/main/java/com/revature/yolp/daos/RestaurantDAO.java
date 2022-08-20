@@ -1,6 +1,6 @@
-package com.revature.chuong.bookstore.daos;
+package com.revature.yolp.daos;
 
-import com.revature.chuong.bookstore.models.Restaurant;
+import com.revature.yolp.models.Restaurant;
 
 import java.util.List;
 
