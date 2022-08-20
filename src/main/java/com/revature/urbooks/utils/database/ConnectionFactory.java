@@ -1,4 +1,4 @@
-package com.revature.yolp.utils.database;
+package com.revature.urbooks.utils.database;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -10,6 +10,7 @@ import java.util.Properties;
 /* Singleton design pattern */
 public class ConnectionFactory {
     private static ConnectionFactory connectionFactory;
+    private final Properties props = new Properties();
 
     static {
         try {
@@ -18,9 +19,6 @@ public class ConnectionFactory {
             e.printStackTrace();
         }
     }
-
-    private final Properties props = new Properties();
-
     private ConnectionFactory() {
         try {
             props.load(new FileReader("src/main/resources/db.properties"));
@@ -41,7 +39,7 @@ public class ConnectionFactory {
 
         Connection conn = DriverManager.getConnection(url, username, password);
         if (conn == null) throw new RuntimeException("Could not establish connection with the database!");
-        System.out.println("Connection successfully...");
+
         return conn;
     }
 }
