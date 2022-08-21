@@ -3,6 +3,7 @@ package com.revature.urbooks.ui;
 import com.revature.urbooks.models.Book;
 import com.revature.urbooks.models.User;
 import com.revature.urbooks.services.BookService;
+import com.revature.urbooks.utils.custom_exceptions.InvalidUserException;
 
 import java.util.*;
 
@@ -13,7 +14,7 @@ public class ShoppingMenu implements IMenu{
 
     private List<Book> books;
 
-    private final Map<Integer, Integer> cart;
+    private final Map<String, Book> cart;
 
     public ShoppingMenu(User user, BookService bookService, List<Book> books) {
         this.user = user;
@@ -32,16 +33,22 @@ public class ShoppingMenu implements IMenu{
                 System.out.println("\n[1] Add to cart: ");
                 System.out.println("[2] Edit cart: ");
                 System.out.println("[3] View cart: ");
-                System.out.println("[3] View cart: ");
                 System.out.println("[4] Check out: ");
+                System.out.println("[x] Back to main home page: ");
                 System.out.print("\nEnter: ");
                 switch (scan.nextLine()) {
                     case "1":
                         enterItemNumberToBuy();
                         break;
+                    case "2":
+                        enterItemNumberToBuy();
+                        break;
+                    case "3":
+                        viewCart(cart);
+                        break;
                     case "x":
-                        // exit shopping menu. return to ShoppingMainMenu page
-                        new ShoppingMainMenu(user, bookService);
+                        // return to shopping home page
+                        new ShoppingHomePage(user, bookService);
                         break exit;
                     default:
                         System.out.println("\nInvalid input!");
@@ -51,52 +58,97 @@ public class ShoppingMenu implements IMenu{
         }
     }
 
+    private void viewCart(Map<String, Book> cart) {
+        Scanner scan = new Scanner(System.in);
+        System.out.println("Items in your cart");
+        System.out.printf("%-30s%-30s%-30s%-30s%-20s\n",  "ISBN",  "BOOK TITLE", "PUBLISHER", "PRICE", "QUANTITY");
+        for(Map.Entry<String, Book> e : cart.entrySet()) {
+            System.out.printf("%-30s%-30s%-30s%-30s%-20s\n",
+                    e.getValue().getIsbn(),
+                    e.getValue().getTitle(),
+                    e.getValue().getPublisher_name(),
+                    e.getValue().getPrice(),
+                    e.getValue().getQuantity());
+        }
+    }
+
     private void enterItemNumberToBuy() {
         Scanner scan = new Scanner(System.in);
-        exit: {
-            while(true) {
-                System.out.println("\n[1] Enter Item # to buy: ");
-                System.out.println("[x] Done: ");
-                System.out.print("\nEnter: ");
-                String s = scan.nextLine();
-                if(s.equals("x")) break exit;
-                Integer itemNumber = Integer.parseInt(s);
-                if(itemNumber > 0 && itemNumber < books.size()) {
-                    addToCart(itemNumber);
-                } else {
-                    System.out.println("Bad input");
+        int itemNumber;
+        int quantity;
+
+        bookSelection: {
+            while (true) {
+                System.out.print("\nEnter item # to  buy/add to cart: ");
+                try {
+                    itemNumber = scan.nextInt();
+                    if (itemNumber >= 1 && itemNumber <= books.size()) {
+                        break bookSelection;
+                    } else {
+                        throw new InvalidUserException("Invalid item number");
+                    }
+                } catch(InvalidUserException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+
+        Book product = books.get(itemNumber-1);
+
+        // item  ordered is not duplicate or in the cart
+        Book newOrderBook = new Book(
+                product.getId(),
+                product.getIsbn(),
+                product.getTitle(),
+                product.getPublisher_name(),
+                product.getPublisher_id(),
+                product.getPrice(),
+                0);
+
+        bookQuantity: {
+            while (true) {
+                System.out.print("\nEnter quantity: ");
+
+                try {
+                    quantity = scan.nextInt();
+                    String id = product.getId();
+                    if(cart.containsKey(id)) {
+                        Book orderedBook = orderedBook = cart.get(books.get(itemNumber-1).getId());
+                        int currentQuantity = cart.get(id).getQuantity();
+                        if(currentQuantity+quantity > product.getQuantity()) {
+                            throw new InvalidUserException("Invalid input. Quantity ordered is greater than available book's quantity");
+                        } else {
+                            orderedBook.setQuantity(quantity + currentQuantity);
+                            cart.put(product.getId(), orderedBook);
+                        }
+                    } else if (quantity > product.getQuantity()) {
+                        throw new InvalidUserException("Invalid input. Quantity ordered is greater than available book's quantity");
+                    } else {
+                        newOrderBook.setQuantity(quantity);
+                        cart.put(product.getId(), newOrderBook);
+                    }
+
+                    break bookQuantity;
+                } catch(InvalidUserException e) {
+                    System.out.println(e.getMessage());
                 }
             }
         }
     }
-
-    private void addToCart(Integer itemNumber) {
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Enter quantity: ");
-        int requestQuantity = scan.nextInt();
-        if(cart.containsKey(itemNumber)) {
-            int currentQuantity = cart.get(itemNumber);
-            cart.put(itemNumber, currentQuantity +  requestQuantity);
-        } else {
-            cart.put(itemNumber, requestQuantity);
-        }
-
-    }
     private void displayAllBooks() {
-
         System.out.println("\nAll programming books...");
-        System.out.println("");
         System.out.printf("%-30s%-30s%-30s%-30s%-30s%-20s\n",  "ISBN",  "BOOK TITLE", "PUBLISHER", "PUBLISHER ID", "PRICE", "QUANTITY");
         System.out.printf("%-30s%-30s%-30s%-30s%-30s%-20s\n",  "=====", "===========", "=========", "============", "=====", "========");
         System.out.println("");
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-            System.out.printf("%-30s%-30s%-30s%-30s%-30s%-20s\n", i+1 + ". " + book.getIsbn(),  book.getTitle(), book.getPublisher_name(), book.getPublisher_id(), book.getPrice(), book.getQuantity());
-        }
-
-        try {
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("\nInvalid input!");
+            System.out.printf("%-30s%-30s%-30s%-30s%-30s%-20s\n",
+                    i+1 + ". " + book.getIsbn(),
+                    book.getTitle(),
+                    book.getPublisher_name(),
+                    book.getPublisher_id(),
+                    book.getPrice(),
+                    book.getQuantity());
         }
     }
 }

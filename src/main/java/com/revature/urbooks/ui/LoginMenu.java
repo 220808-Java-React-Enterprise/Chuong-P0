@@ -40,7 +40,7 @@ public class LoginMenu implements IMenu {
                     case "2":
                         User user = signup();
                         userService.register(user);
-                        new ShoppingMainMenu(user, new BookService(new BookDAO())).start();
+                        new ShoppingHomePage(user, new BookService(new BookDAO())).start();
                         break;
                     case "x":
                         System.out.println("\nGoodbye!");
@@ -76,10 +76,10 @@ public class LoginMenu implements IMenu {
                     if (user.getRole().equals("ADMIN"))
                         new AdminMainMenu(user, new UserService(new UserDAO())).start();
                     else
-                        new ShoppingMainMenu(user, new BookService(new BookDAO())).start();
+                        new ShoppingHomePage(user, new BookService(new BookDAO())).start();
 
                     if (user.getRole().equals("DEFAULT"))
-                        new ShoppingMainMenu(user, new BookService(new BookDAO())).start();
+                        new ShoppingHomePage(user, new BookService(new BookDAO())).start();
                     break exit;
                 } catch (InvalidUserException e) {
                     System.out.println(e.getMessage());
