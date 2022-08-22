@@ -2,12 +2,14 @@ package com.revature.urbooks.ui;
 
 import com.revature.urbooks.daos.BookDAO;
 import com.revature.urbooks.daos.OrderDAO;
+import com.revature.urbooks.daos.UserDAO;
 import com.revature.urbooks.models.Book;
 import com.revature.urbooks.models.Order;
 import com.revature.urbooks.models.User;
 import com.revature.urbooks.services.BookService;
 import com.revature.urbooks.services.OrderDetailService;
 import com.revature.urbooks.services.OrderService;
+import com.revature.urbooks.services.UserService;
 
 
 import java.util.Map;
@@ -50,7 +52,8 @@ public class OrderMenu implements IMenu{
                         break;
                     case "x":
                         // return to shopping menu page
-                        new ShoppingMenu(user, new BookService(new BookDAO()), new BookService().getAllBooks()).start();
+                        //new ShoppingMenu(user, new BookService(new BookDAO()), new BookService().getAllBooks()).start();
+                        new LoginMenu(new UserService(new UserDAO()));
                         break exit;
                     default:
                         System.out.println("\nInvalid input!");
@@ -120,10 +123,13 @@ public class OrderMenu implements IMenu{
         tax = subTotal * taxRate;
         grandTotal += tax + subTotal;
 
-        Order order = new Order(id, subTotal, tax, grandTotal);
+        Order order = new Order(id, subTotal, tax, grandTotal, user);
+        order.setUser(user);
 
         orderService.saveOrder(order);
         this.orderDetailService.saveToOrderDetail(order, this.cart);
+
+        cart.clear();
 
         return order;
     }

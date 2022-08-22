@@ -6,11 +6,14 @@ public class Order {
     private double tax;
     private double grandTotal;
 
-    public Order(String id, double subTotal, double tax, double grandTotal) {
+    private User user;
+
+    public Order(String id, double subTotal, double tax, double grandTotal, User user) {
         this.id = id;
         this.subTotal = subTotal;
         this.tax = tax;
         this.grandTotal = grandTotal;
+        this.user = user;
     }
 
     public String getId() {
@@ -43,5 +46,13 @@ public class Order {
 
     public void setGrandTotal(double grandTotal) {
         this.grandTotal = grandTotal;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
