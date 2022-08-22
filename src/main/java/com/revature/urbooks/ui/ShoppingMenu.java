@@ -1,8 +1,13 @@
 package com.revature.urbooks.ui;
 
+import com.revature.urbooks.daos.BookDAO;
+import com.revature.urbooks.daos.OrderDAO;
+import com.revature.urbooks.daos.OrderDetailDAO;
 import com.revature.urbooks.models.Book;
 import com.revature.urbooks.models.User;
 import com.revature.urbooks.services.BookService;
+import com.revature.urbooks.services.OrderDetailService;
+import com.revature.urbooks.services.OrderService;
 import com.revature.urbooks.utils.custom_exceptions.InvalidUserException;
 
 import java.util.*;
@@ -29,6 +34,7 @@ public class ShoppingMenu implements IMenu{
 
         exit: {
             while (true) {
+                System.out.println("\nWelcome to UR Bookstore shopping page - " + user.getUsername() + "!");
                 displayAllBooks();
                 System.out.println("\n[1] Add to cart: ");
                 System.out.println("[2] Edit cart: ");
@@ -46,9 +52,16 @@ public class ShoppingMenu implements IMenu{
                     case "3":
                         viewCart(cart);
                         break;
+                    case "4":
+                        new OrderMenu(
+                                user,
+                                new OrderService(new OrderDAO()),
+                                new OrderDetailService(new OrderDetailDAO()),
+                                cart).start();
+                        break;
                     case "x":
                         // return to shopping home page
-                        new ShoppingHomePage(user, bookService);
+                        new ShoppingHomePage(user, new BookService(new BookDAO()));
                         break exit;
                     default:
                         System.out.println("\nInvalid input!");
@@ -69,6 +82,41 @@ public class ShoppingMenu implements IMenu{
                     e.getValue().getPublisher_name(),
                     e.getValue().getPrice(),
                     e.getValue().getQuantity());
+        }
+        exit: {
+            while (true) {
+                if(cart.isEmpty()) {
+                    System.out.println("Cart is empty");
+                    System.out.println("\n[x] Back to UR Bookstore shopping page: ");
+                    System.out.print("\nEnter: ");
+                    switch (scan.nextLine()) {
+                        case "x":
+                            // return to shopping menu page
+                            new ShoppingMenu(user, new BookService(new BookDAO()), new BookService(new BookDAO()).getAllBooks()).start();
+                            break exit;
+                        default:
+                            System.out.println("\nInvalid input!");
+                            break;
+                    }
+                } else {
+                    System.out.println("\n[1] Check out: ");
+                    System.out.println("\n[x] Back to UR Bookstore shopping page: ");
+                    System.out.print("\nEnter: ");
+
+                    switch (scan.nextLine()) {
+                        case "1":
+                            new OrderMenu(user, new OrderService(new OrderDAO()), new OrderDetailService(new OrderDetailDAO()), cart).start();
+                            break;
+                        case "x":
+                            // return to shopping menu page
+                            new ShoppingMenu(user, new BookService(new BookDAO()), new BookService(new BookDAO()).getAllBooks()).start();
+                            break exit;
+                        default:
+                            System.out.println("\nInvalid input!");
+                            break;
+                    }
+                }
+            }
         }
     }
 

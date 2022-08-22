@@ -53,7 +53,7 @@ public class BookDAO implements CrudDAO<Book>{
                 book.setTitle(rs.getString("title"));
                 book.setPublisher_name(rs.getString("publisher_name"));
                 book.setPublisher_id(rs.getString("publisher_id"));
-                book.setPrice(rs.getDouble("price"));
+                book.setPrice(rs.getFloat("price"));
                 book.setQuantity(rs.getInt("quantity"));
                 books.add(book);
             }
