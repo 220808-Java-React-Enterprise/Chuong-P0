@@ -62,12 +62,16 @@ public class ShoppingHomePage implements IMenu {
         System.out.println("============================================");
         System.out.printf("%-50s%-30s%-30s%-30s%-20s\n",  "ORDER NUMBER",  "SUB TOTAL", "TAX", "GRAND TOTAL", "STATUS");
         for(Order o : orders) {
+            String status = "Processed";
+            if(!o.isStatus()) {
+                status = "Pending";
+            }
             System.out.printf("%-50s%-30s%-30s%-30s%-20s\n",
                     o.getId(),
                     o.getSubTotal(),
                     o.getTax(),
                     o.getGrandTotal(),
-                    o.isStatus());
+                    status);
 
 
         }

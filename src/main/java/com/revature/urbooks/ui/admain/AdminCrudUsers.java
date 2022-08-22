@@ -1,9 +1,11 @@
-package com.revature.urbooks.ui;
+package com.revature.urbooks.ui.admain;
 
 import com.revature.urbooks.daos.UserDAO;
 import com.revature.urbooks.dto.UserDto;
 import com.revature.urbooks.models.User;
 import com.revature.urbooks.services.UserService;
+import com.revature.urbooks.ui.IMenu;
+import com.revature.urbooks.ui.LoginMenu;
 
 import java.util.List;
 import java.util.Scanner;
@@ -52,11 +54,10 @@ public class AdminCrudUsers implements IMenu {
             while (true) {
                 System.out.println("");
                 System.out.printf("%-22s%-22s%-22s%-22s%-22s%-22s\n","User Name","First Name","Last Name", "Email", "Phone", "User Role");
-                List<UserDto> users = this.userService.getAllUsers();
+                List<User> users = this.userService.getAllUsers();
 
-                for (int i = 0; i < users.size(); i++) {
-                    UserDto user = users.get(i);
-                    System.out.printf("%-22s%-22s%-22s%-22s%-22s%-22s\n", i+1 + ". " + user.getUsername(),  user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(), user.getRole());
+                for (User u : users) {
+                    System.out.printf("%-22s%-22s%-22s%-22s%-22s%-22s\n", 1 + ". " + user.getUsername(),  user.getFirstName(), user.getLastName(), user.getEmail(), user.getPhone(), user.getRole());
                     System.out.println("");
                 }
 

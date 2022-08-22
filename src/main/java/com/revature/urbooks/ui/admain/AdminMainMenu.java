@@ -1,8 +1,12 @@
-package com.revature.urbooks.ui;
+package com.revature.urbooks.ui.admain;
 
 import com.revature.urbooks.daos.UserDAO;
 import com.revature.urbooks.models.User;
 import com.revature.urbooks.services.UserService;
+import com.revature.urbooks.ui.IMenu;
+import com.revature.urbooks.ui.LoginMenu;
+import com.revature.urbooks.ui.admain.AdminCrudUsers;
+import com.revature.urbooks.ui.admain.users.AdminUserMenu;
 
 import java.util.Scanner;
 
@@ -22,14 +26,14 @@ public class AdminMainMenu implements IMenu {
         exit: {
             while (true) {
                 System.out.println("\nWelcome to the admin main menu " + user.getUsername() + "!");
-                System.out.println("[1] View all users");
-                System.out.println("[1] View all books");
-                System.out.println("[x] Sign out!");
+                System.out.println("[1] Manage all users");
+                System.out.println("[1] Manage all books");
+                System.out.println("[x] Log out!");
                 System.out.print("\nEnter: ");
 
                 switch (scan.nextLine()) {
                     case "1":
-                        new AdminCrudUsers(this.user, this.userService).start();
+                        new AdminUserMenu(user, new UserService(new UserDAO())).start();
                         break;
                     case "x":
                         new LoginMenu(new UserService(new UserDAO())).start();

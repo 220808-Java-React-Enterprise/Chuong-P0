@@ -18,6 +18,10 @@ public class User {
 
     }
 
+    public User(String id, String username, String role, String email, String phone, String firstName, String lastName) {
+
+    }
+
     public User(String id, String username, String password) {
         this(id, username, password, "DEFAULT");
 

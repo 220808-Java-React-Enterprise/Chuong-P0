@@ -18,7 +18,7 @@ public class UserService {
         userDAO.save(user);
     }
 
-    public List<UserDto> getAllUsers() {
+    public List<User> getAllUsers() {
         return this.userDAO.getAllUsers();
     }
 

@@ -111,40 +111,57 @@ public class UserDAO implements CrudDAO<User> {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next())
-                return new User(rs.getString("id"), rs.getString("username"), rs.getString("password"), rs.getString("role"));
+                return new User(
+                        rs.getString("id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("role"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName")
+                );
         } catch (SQLException e) {
             throw new InvalidSQLException("An error occurred when tyring to save to the database.");
         } finally {
             if(con != null) {
-                try {
-                    con.close();
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
+
             }
         }
 
         return null;
     }
 
-    public List<UserDto> getAllUsers() {
-        List<UserDto> users = new ArrayList<>();
+
+
+    public List<User> getAllUsers() {
+        List<User> users = new ArrayList<>();
         Connection con = null;
         try {
             con = ConnectionFactory.getInstance().getConnection();
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("select * from users");
             while (rs.next()) {
-                UserDto user = new UserDto(
-                        rs.getString("id"),
-                        rs.getString("username"),
-                        rs.getString("email"),
-                        rs.getString("phone"),
-                        rs.getString("firstName"),
-                        rs.getString("lastName"),
-                        rs.getString("role"));
+                String id = rs.getString("id");
+                String username =  rs.getString("username");
+                String role = rs.getString("role");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+
+                User user = new User();
+                user.setId(id);
+                user.setUsername(username);
+                user.setRole(role);
+                user.setEmail(email);
+                user.setPhone(phone);
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+
                 users.add(user);
             }
+
             return users;
         } catch (SQLException e) {
             throw new InvalidSQLException("An error occurred when tyring to save to the database.");
@@ -157,5 +174,7 @@ public class UserDAO implements CrudDAO<User> {
                 }
             }
         }
+
+
     }
 }
