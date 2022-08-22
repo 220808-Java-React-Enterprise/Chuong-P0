@@ -1,9 +1,12 @@
 package com.revature.urbooks.ui;
 
 import com.revature.urbooks.daos.BookDAO;
+import com.revature.urbooks.daos.OrderHistoryDAO;
 import com.revature.urbooks.daos.UserDAO;
 import com.revature.urbooks.models.User;
 import com.revature.urbooks.services.BookService;
+import com.revature.urbooks.services.OrderDetailService;
+import com.revature.urbooks.services.OrderHistoryService;
 import com.revature.urbooks.services.UserService;
 import com.revature.urbooks.utils.custom_exceptions.InvalidUserException;
 
@@ -40,7 +43,7 @@ public class LoginMenu implements IMenu {
                     case "2":
                         User user = signup();
                         userService.register(user);
-                        new ShoppingHomePage(user, new BookService(new BookDAO())).start();
+                        new ShoppingHomePage(user, new BookService(new BookDAO()), new OrderHistoryService(new OrderHistoryDAO())).start();
                         break;
                     case "x":
                         System.out.println("\nGoodbye!");
@@ -76,10 +79,10 @@ public class LoginMenu implements IMenu {
                     if (user.getRole().equals("ADMIN"))
                         new AdminMainMenu(user, new UserService(new UserDAO())).start();
                     else
-                        new ShoppingHomePage(user, new BookService(new BookDAO())).start();
+                        new ShoppingHomePage(user, new BookService(new BookDAO()), new OrderHistoryService(new OrderHistoryDAO())).start();
 
                     if (user.getRole().equals("DEFAULT"))
-                        new ShoppingHomePage(user, new BookService(new BookDAO())).start();
+                        new ShoppingHomePage(user, new BookService(new BookDAO()), new OrderHistoryService(new OrderHistoryDAO())).start();
                     break exit;
                 } catch (InvalidUserException e) {
                     System.out.println(e.getMessage());

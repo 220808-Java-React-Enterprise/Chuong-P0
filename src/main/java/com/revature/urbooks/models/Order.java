@@ -6,7 +6,10 @@ public class Order {
     private double tax;
     private double grandTotal;
 
+    private boolean status;
     private User user;
+
+    private String userId;
 
     public Order(String id, double subTotal, double tax, double grandTotal, User user) {
         this.id = id;
@@ -14,6 +17,22 @@ public class Order {
         this.tax = tax;
         this.grandTotal = grandTotal;
         this.user = user;
+    }
+
+    public Order(String id, double subTotal, double tax, double grandTotal, boolean status, String usserId) {
+        this.id = id;
+        this.subTotal = subTotal;
+        this.tax = tax;
+        this.grandTotal = grandTotal;
+        this.userId = usserId;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     public String getId() {
@@ -26,6 +45,14 @@ public class Order {
 
     public double getSubTotal() {
         return subTotal;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setSubTotal(double subTotal) {

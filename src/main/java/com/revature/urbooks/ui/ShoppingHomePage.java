@@ -1,11 +1,14 @@
 package com.revature.urbooks.ui;
 
 import com.revature.urbooks.daos.UserDAO;
+import com.revature.urbooks.models.Order;
 import com.revature.urbooks.models.User;
 
 import com.revature.urbooks.services.BookService;
+import com.revature.urbooks.services.OrderHistoryService;
 import com.revature.urbooks.services.UserService;
 
+import java.util.List;
 import java.util.Scanner;
 
 //Shopping home page
@@ -13,11 +16,13 @@ public class ShoppingHomePage implements IMenu {
     private final User user;
     private final BookService bookService;
 
+    private final OrderHistoryService orderHistoryService;
 
-    public ShoppingHomePage(User user, BookService bookService) {
+
+    public ShoppingHomePage(User user, BookService bookService, OrderHistoryService orderHistoryService) {
         this.user = user;
         this.bookService = bookService;
-
+        this.orderHistoryService = orderHistoryService;
     }
 
     @Override
@@ -37,8 +42,7 @@ public class ShoppingHomePage implements IMenu {
                         new ShoppingMenu(user, bookService, bookService.getAllBooks()).start();
                         break;
                     case "2":
-
-
+                        displayOrdersHistory();
                         break;
                     case "x":
                         // exit shopping menu. return to login page
@@ -51,4 +55,21 @@ public class ShoppingHomePage implements IMenu {
             }
         }
     }// end start()
+
+    private void displayOrdersHistory() {
+        List<Order> orders = orderHistoryService.getAllOrders(user.getId());
+        System.out.println("Your ordered history " + user.getUsername());
+        System.out.println("============================================");
+        System.out.printf("%-50s%-30s%-30s%-30s%-20s\n",  "ORDER NUMBER",  "SUB TOTAL", "TAX", "GRAND TOTAL", "STATUS");
+        for(Order o : orders) {
+            System.out.printf("%-50s%-30s%-30s%-30s%-20s\n",
+                    o.getId(),
+                    o.getSubTotal(),
+                    o.getTax(),
+                    o.getGrandTotal(),
+                    o.isStatus());
+
+
+        }
+    }
 }// end class

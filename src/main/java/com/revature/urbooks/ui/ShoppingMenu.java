@@ -3,10 +3,12 @@ package com.revature.urbooks.ui;
 import com.revature.urbooks.daos.BookDAO;
 import com.revature.urbooks.daos.OrderDAO;
 import com.revature.urbooks.daos.OrderDetailDAO;
+import com.revature.urbooks.daos.OrderHistoryDAO;
 import com.revature.urbooks.models.Book;
 import com.revature.urbooks.models.User;
 import com.revature.urbooks.services.BookService;
 import com.revature.urbooks.services.OrderDetailService;
+import com.revature.urbooks.services.OrderHistoryService;
 import com.revature.urbooks.services.OrderService;
 import com.revature.urbooks.utils.custom_exceptions.InvalidUserException;
 
@@ -61,7 +63,7 @@ public class ShoppingMenu implements IMenu{
                         break;
                     case "x":
                         // return to shopping home page
-                        new ShoppingHomePage(user, new BookService(new BookDAO()));
+                        new ShoppingHomePage(user, new BookService(new BookDAO()), new OrderHistoryService(new OrderHistoryDAO()));
                         break exit;
                     default:
                         System.out.println("\nInvalid input!");
