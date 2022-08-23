@@ -1,12 +1,11 @@
-package com.revature.urbooks.ui.admain;
+package com.revature.urbooks.ui.admin;
 
 import com.revature.urbooks.daos.UserDAO;
 import com.revature.urbooks.models.User;
 import com.revature.urbooks.services.UserService;
 import com.revature.urbooks.ui.IMenu;
 import com.revature.urbooks.ui.LoginMenu;
-import com.revature.urbooks.ui.admain.AdminCrudUsers;
-import com.revature.urbooks.ui.admain.users.AdminUserMenu;
+import com.revature.urbooks.ui.admin.users.AdminUserMenu;
 
 import java.util.Scanner;
 

@@ -35,7 +35,7 @@ public class ShoppingCartMenu implements IMenu{
                 System.out.println("\n[1] Enter items # to buy: ");
                 System.out.println("\n[2] Edit cart: ");
                 System.out.println("\n[3] View cart: ");
-                System.out.println("\n[x] Enter items # to buy: ");
+                System.out.println("\n[x] Log out: ");
                 switch (scan.nextLine()) {
                     case "1":
                         break;

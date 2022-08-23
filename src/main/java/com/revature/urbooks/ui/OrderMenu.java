@@ -42,23 +42,45 @@ public class OrderMenu implements IMenu{
         exit: {
             while (true) {
                 System.out.println("\nWelcome to UR Bookstore checkout page - " + user.getUsername() + "!");
-                System.out.println("\n[1] Proceed to check out: ");
-                System.out.println("[x] Back shopping menu: ");
-                System.out.print("\nEnter: ");
-                switch (scan.nextLine()) {
-                    case "1":
-                        Order order = submitCheckoutPage();
-                        displayCheckoutSummary(order);
-                        break;
-                    case "x":
-                        // return to shopping menu page
-                        //new ShoppingMenu(user, new BookService(new BookDAO()), new BookService().getAllBooks()).start();
-                        new LoginMenu(new UserService(new UserDAO()));
-                        break exit;
-                    default:
-                        System.out.println("\nInvalid input!");
-                        break;
+                if(!cart.isEmpty())
+                {
+                    System.out.println("\n[1] Proceed to check out: ");
+                    System.out.println("[x] Back shopping menu: ");
+                    System.out.print("\nEnter: ");
+                    switch (scan.nextLine()) {
+                        case "1":
+                            Order order = submitCheckoutPage();
+                            displayCheckoutSummary(order);
+                            break;
+                        case "x":
+                            // return to shopping menu page
+                            BookDAO bookDAO = new BookDAO();
+                            BookService bookService = new BookService(bookDAO);
+                            new ShoppingMenu(user, bookService, bookService.getAllBooks(), cart).start();
+                            break exit;
+                        default:
+                            System.out.println("\nInvalid input!");
+                            break;
+                    }//end switch
                 }
+                else
+                {
+                    System.out.println("Cart is empty. Nothing to check out");
+                    System.out.println("[x] Back shopping menu: ");
+                    System.out.print("\nEnter: ");
+                    switch (scan.nextLine()) {
+                        case "x":
+                            // return to ShoppingMenu UI
+                            BookDAO bookDAO = new BookDAO();
+                            BookService bookService = new BookService(bookDAO);
+                            new ShoppingMenu(user, bookService, bookService.getAllBooks(), cart).start();
+                            break exit;
+                        default:
+                            System.out.println("\nInvalid input!");
+                            break;
+                    }//end switch
+                }
+
             }
         }
     }
@@ -80,7 +102,7 @@ public class OrderMenu implements IMenu{
                 switch (scan.nextLine()) {
                     case "x":
                         // return to shopping menu page
-                        new ShoppingMenu(user, new BookService(new BookDAO()), new BookService(new BookDAO()).getAllBooks()).start();
+                        new ShoppingMenu(user, new BookService(new BookDAO()), new BookService(new BookDAO()).getAllBooks(), cart).start();
                         break exit;
                     default:
                         System.out.println("\nInvalid input!");
@@ -101,7 +123,7 @@ public class OrderMenu implements IMenu{
                 switch (scan.nextLine()) {
                     case "x":
                         // return to shopping menu page
-                        new ShoppingMenu(user, new BookService(new BookDAO()), new BookService(new BookDAO()).getAllBooks()).start();
+                        new ShoppingMenu(user, new BookService(new BookDAO()), new BookService(new BookDAO()).getAllBooks(), cart).start();
                         break exit;
                     default:
                         System.out.println("\nInvalid input!");

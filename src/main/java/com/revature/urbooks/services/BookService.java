@@ -9,10 +9,6 @@ import java.util.List;
 public class BookService {
     private final BookDAO bookDAO;
 
-    public BookService() {
-        bookDAO = null;
-    }
-
     public BookService(BookDAO bookDAO) {
         this.bookDAO = bookDAO;
     }

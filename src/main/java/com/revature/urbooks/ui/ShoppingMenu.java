@@ -23,11 +23,11 @@ public class ShoppingMenu implements IMenu{
 
     private final Map<String, Book> cart;
 
-    public ShoppingMenu(User user, BookService bookService, List<Book> books) {
+    public ShoppingMenu(User user, BookService bookService, List<Book> books, Map<String, Book> cart) {
         this.user = user;
         this.bookService = bookService;
         this.books = books;
-        this.cart = new HashMap<>();
+        this.cart = cart;
     }
 
     @Override
@@ -39,9 +39,8 @@ public class ShoppingMenu implements IMenu{
                 System.out.println("\nWelcome to UR Bookstore shopping page - " + user.getUsername() + "!");
                 displayAllBooks();
                 System.out.println("\n[1] Add to cart: ");
-                System.out.println("[2] Edit cart: ");
-                System.out.println("[3] View cart: ");
-                System.out.println("[4] Check out: ");
+                System.out.println("[2] View cart: ");
+                System.out.println("[3] Check out: ");
                 System.out.println("[x] Back to main home page: ");
                 System.out.print("\nEnter: ");
                 switch (scan.nextLine()) {
@@ -49,12 +48,9 @@ public class ShoppingMenu implements IMenu{
                         enterItemNumberToBuy();
                         break;
                     case "2":
-                        enterItemNumberToBuy();
-                        break;
-                    case "3":
                         viewCart(cart);
                         break;
-                    case "4":
+                    case "3":
                         new OrderMenu(
                                 user,
                                 new OrderService(new OrderDAO()),
@@ -63,7 +59,7 @@ public class ShoppingMenu implements IMenu{
                         break;
                     case "x":
                         // return to shopping home page
-                        new ShoppingHomePage(user, new BookService(new BookDAO()), new OrderHistoryService(new OrderHistoryDAO()));
+                        new ShoppingHomePage(user, new BookService(new BookDAO()), new OrderHistoryService(new OrderHistoryDAO())).start();
                         break exit;
                     default:
                         System.out.println("\nInvalid input!");
@@ -75,52 +71,67 @@ public class ShoppingMenu implements IMenu{
 
     private void viewCart(Map<String, Book> cart) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("Items in your cart");
-        System.out.printf("%-30s%-30s%-30s%-30s%-20s\n",  "ISBN",  "BOOK TITLE", "PUBLISHER", "PRICE", "QUANTITY");
-        for(Map.Entry<String, Book> e : cart.entrySet()) {
+        System.out.println("\nWelcome to UR Bookstore cart page - " + user.getUsername() + "!");
+        System.out.printf("%-30s%-30s%-30s%-30s%-20s\n", "ISBN", "BOOK TITLE", "PUBLISHER", "PRICE", "QUANTITY");
+        for (Map.Entry<String, Book> e : cart.entrySet()) {
             System.out.printf("%-30s%-30s%-30s%-30s%-20s\n",
                     e.getValue().getIsbn(),
                     e.getValue().getTitle(),
                     e.getValue().getPublisher_name(),
                     e.getValue().getPrice(),
                     e.getValue().getQuantity());
-        }
-        exit: {
+        }//end for loop
+
+        exit:
+        {
             while (true) {
-                if(cart.isEmpty()) {
+                if (cart.isEmpty()) {
                     System.out.println("Cart is empty");
                     System.out.println("\n[x] Back to UR Bookstore shopping page: ");
                     System.out.print("\nEnter: ");
                     switch (scan.nextLine()) {
                         case "x":
                             // return to shopping menu page
-                            new ShoppingMenu(user, new BookService(new BookDAO()), new BookService(new BookDAO()).getAllBooks()).start();
+                            //new ShoppingMenu(user, new BookService(new BookDAO()), new BookService(new BookDAO()).getAllBooks()).start();
                             break exit;
                         default:
                             System.out.println("\nInvalid input!");
                             break;
-                    }
+                    }//end switch
                 } else {
-                    System.out.println("\n[1] Check out: ");
-                    System.out.println("\n[x] Back to UR Bookstore shopping page: ");
-                    System.out.print("\nEnter: ");
-
-                    switch (scan.nextLine()) {
-                        case "1":
-                            new OrderMenu(user, new OrderService(new OrderDAO()), new OrderDetailService(new OrderDetailDAO()), cart).start();
-                            break;
-                        case "x":
-                            // return to shopping menu page
-                            new ShoppingMenu(user, new BookService(new BookDAO()), new BookService(new BookDAO()).getAllBooks()).start();
-                            break exit;
-                        default:
-                            System.out.println("\nInvalid input!");
-                            break;
+                    if (!cart.isEmpty()) {
+                        System.out.println("\n[1] Check out: ");
+                        System.out.println("\n[x] Back to UR Bookstore shopping page: ");
+                        System.out.print("\nEnter: ");
+                        switch (scan.nextLine()) {
+                            case "1":
+                                new OrderMenu(user, new OrderService(new OrderDAO()), new OrderDetailService(new OrderDetailDAO()), cart).start();
+                                break;
+                            case "x":
+                                // return to shopping menu page
+                                new ShoppingMenu(user, new BookService(new BookDAO()), new BookService(new BookDAO()).getAllBooks(), cart).start();
+                                break exit;
+                            default:
+                                System.out.println("\nInvalid input!");
+                                break;
+                        }//end switch
+                    } else {
+                        System.out.println("\n[x] Back to UR Bookstore shopping page: ");
+                        System.out.print("\nEnter: ");
+                        switch (scan.nextLine()) {
+                            case "x":
+                                // return to shopping menu page
+                                new ShoppingMenu(user, new BookService(new BookDAO()), new BookService(new BookDAO()).getAllBooks(), cart).start();
+                                break exit;
+                            default:
+                                System.out.println("\nInvalid input!");
+                                break;
+                        }
                     }
                 }
             }
         }
-    }
+    }//end viewCart()
 
     private void enterItemNumberToBuy() {
         Scanner scan = new Scanner(System.in);

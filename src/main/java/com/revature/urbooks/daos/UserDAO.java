@@ -8,6 +8,7 @@ import com.revature.urbooks.utils.database.ConnectionFactory;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class UserDAO implements CrudDAO<User> {
 
@@ -183,10 +184,15 @@ public class UserDAO implements CrudDAO<User> {
         Connection con = null;
         try {
             con = ConnectionFactory.getInstance().getConnection();
-            PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE firstname like '%Joh%' or lastName like '%Nguye%'");
-            //ps.setString(1, firstName);
+            //PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE firstName like ''%?%'' or lastName like '%?%'");
+           // ps.setString(1, firstName);
             //ps.setString(2, lastName);
-            ResultSet rs = ps.executeQuery();
+           // ResultSet rs = ps.executeQuery();
+
+
+            String sql = "SELECT * FROM users WHERE lower(firstname) like '%" + firstName.toLowerCase() + "%' or lower(lastName) like '%" + lastName.toLowerCase() + "%';";
+            Statement  stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
 
             while(rs.next()) {
                 User user = new User(

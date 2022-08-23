@@ -1,7 +1,6 @@
-package com.revature.urbooks.ui.admain;
+package com.revature.urbooks.ui.admin;
 
 import com.revature.urbooks.daos.UserDAO;
-import com.revature.urbooks.dto.UserDto;
 import com.revature.urbooks.models.User;
 import com.revature.urbooks.services.UserService;
 import com.revature.urbooks.ui.IMenu;

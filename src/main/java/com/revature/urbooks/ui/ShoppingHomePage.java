@@ -1,6 +1,7 @@
 package com.revature.urbooks.ui;
 
 import com.revature.urbooks.daos.UserDAO;
+import com.revature.urbooks.models.Book;
 import com.revature.urbooks.models.Order;
 import com.revature.urbooks.models.User;
 
@@ -8,6 +9,7 @@ import com.revature.urbooks.services.BookService;
 import com.revature.urbooks.services.OrderHistoryService;
 import com.revature.urbooks.services.UserService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -43,7 +45,7 @@ public class ShoppingHomePage implements IMenu {
 
                 switch (scan.nextLine()) {
                     case "1":
-                        new ShoppingMenu(user, bookService, bookService.getAllBooks()).start();
+                        new ShoppingMenu(user, bookService, bookService.getAllBooks(), new HashMap<String, Book>()).start();
                         break;
                     case "2":
                         displayOrdersHistory();

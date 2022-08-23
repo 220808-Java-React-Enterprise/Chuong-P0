@@ -7,7 +7,7 @@ import com.revature.urbooks.models.User;
 import com.revature.urbooks.services.BookService;
 import com.revature.urbooks.services.OrderHistoryService;
 import com.revature.urbooks.services.UserService;
-import com.revature.urbooks.ui.admain.AdminMainMenu;
+import com.revature.urbooks.ui.admin.AdminMainMenu;
 import com.revature.urbooks.utils.custom_exceptions.InvalidUserException;
 
 import java.util.Scanner;
@@ -43,7 +43,8 @@ public class LoginMenu implements IMenu {
                     case "2":
                         User user = signup();
                         userService.register(user);
-                        new ShoppingHomePage(user, new BookService(new BookDAO()), new OrderHistoryService(new OrderHistoryDAO())).start();
+                        //new ShoppingHomePage(user, new BookService(new BookDAO()), new OrderHistoryService(new OrderHistoryDAO())).start();
+                        new LoginMenu(new UserService(new UserDAO())).start();
                         break;
                     case "x":
                         System.out.println("\nGoodbye!");
