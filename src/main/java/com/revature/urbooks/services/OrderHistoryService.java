@@ -16,4 +16,20 @@ public class OrderHistoryService {
     public List<Order> getAllOrders(String userId) {
         return orderHistoryDAO.getAllOrders(userId);
     }
+
+    public List<Order> getAllOrdersByLatestDate() {
+        return orderHistoryDAO.getAllOrdersByLatestDate();
+    }
+
+    public List<Order> getAllOrdersByOldestDate() {
+        return orderHistoryDAO.getAllOrdersByOldestDate();
+    }
+
+    public List<Order> getAllOrdersByMostExpensive() {
+        return orderHistoryDAO.getAllOrdersByMostExpensive();
+    }
+
+    public List<Order> getAllOrdersByLeastExpensive() {
+        return orderHistoryDAO.getAllOrdersByLeastExpensive();
+    }
 }

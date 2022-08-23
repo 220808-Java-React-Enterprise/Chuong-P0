@@ -11,6 +11,7 @@ import com.revature.urbooks.services.UserService;
 import com.revature.urbooks.ui.IMenu;
 import com.revature.urbooks.ui.ShoppingHomePage;
 import com.revature.urbooks.ui.admain.AdminMainMenu;
+import com.revature.urbooks.utils.custom_exceptions.InvalidUserException;
 
 import java.util.List;
 import java.util.Scanner;
@@ -46,6 +47,7 @@ public class AdminUserMenu implements IMenu {
                         displayUsersList();
                         break;
                     case "2":
+                        searchUserByName();
                         break;
                     case "x":
                         //AdminMainMenu(User user, UserService userService)
@@ -56,6 +58,42 @@ public class AdminUserMenu implements IMenu {
                         break;
                 }
             }
+        }
+    }
+
+    private void searchUserByName() {
+        String firstName = "";
+        String lastName = "";
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("\nSearching user name...");
+
+        exit: {
+            while (true) {
+                System.out.print("\nEnter first name: ");
+                firstName = scan.nextLine();
+
+                System.out.print("\nEnter last name: ");
+                lastName = scan.nextLine();
+
+                try {
+                    List<User> users = userService.searchUserFirstAndLast(firstName, lastName);
+                    displaySearchedUser(users);
+                    break exit;
+                } catch (InvalidUserException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+
+    }
+
+    private void displaySearchedUser(List<User> users) {
+        System.out.println("Searched Users");
+        System.out.println("================================================");
+        for(User u : users) {
+            System.out.printf("%-22s%-22s%-22s%-22s%-22s%-22s\n", 1 + ". " + u.getUsername(),  u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhone(), u.getRole());
+            System.out.println("");
         }
     }
 

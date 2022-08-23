@@ -47,6 +47,7 @@ public class OrderHistoryDAO implements CrudDAO<Order>{
                         rs.getFloat("subTotal"),
                         rs.getFloat("tax"),
                         rs.getFloat("grand_total"),
+                        rs.getDate("orderedDate"),
                         rs.getBoolean("status"),
                         rs.getString("user_id")
                 );
@@ -71,5 +72,145 @@ public class OrderHistoryDAO implements CrudDAO<Order>{
     @Override
     public List<Order> getAll() {
         return null;
+    }
+
+    public List<Order> getAllOrdersByLatestDate() {
+        List<Order> orders = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = ConnectionFactory.getInstance().getConnection();
+            Statement stmt = con.createStatement();
+            String sqlStr = "select * from orders order by orderedDate desc";
+            ResultSet rs = stmt.executeQuery(sqlStr);
+            while (rs.next()) {
+                Order order = new Order(
+                        rs.getString("id"),
+                        rs.getFloat("subTotal"),
+                        rs.getFloat("tax"),
+                        rs.getFloat("grand_total"),
+                        rs.getDate("orderedDate"),
+                        rs.getBoolean("status"),
+                        rs.getString("user_id")
+                );
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            //throw new InvalidSQLException("An error occurred when tyring to save to the database.");
+            e.printStackTrace();
+        } finally {
+            if(con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return orders;
+    }
+
+    public List<Order> getAllOrdersByOldestDate() {
+        List<Order> orders = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = ConnectionFactory.getInstance().getConnection();
+            Statement stmt = con.createStatement();
+            String sqlStr = "select * from orders order by orderedDate asc";
+            ResultSet rs = stmt.executeQuery(sqlStr);
+            while (rs.next()) {
+                Order order = new Order(
+                        rs.getString("id"),
+                        rs.getFloat("subTotal"),
+                        rs.getFloat("tax"),
+                        rs.getFloat("grand_total"),
+                        rs.getDate("orderedDate"),
+                        rs.getBoolean("status"),
+                        rs.getString("user_id")
+                );
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            //throw new InvalidSQLException("An error occurred when tyring to save to the database.");
+            e.printStackTrace();
+        } finally {
+            if(con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return orders;
+    }
+
+    public List<Order> getAllOrdersByMostExpensive() {
+        List<Order> orders = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = ConnectionFactory.getInstance().getConnection();
+            Statement stmt = con.createStatement();
+            String sqlStr = "select * from orders order by grand_total desc";
+            ResultSet rs = stmt.executeQuery(sqlStr);
+            while (rs.next()) {
+                Order order = new Order(
+                        rs.getString("id"),
+                        rs.getFloat("subTotal"),
+                        rs.getFloat("tax"),
+                        rs.getFloat("grand_total"),
+                        rs.getDate("orderedDate"),
+                        rs.getBoolean("status"),
+                        rs.getString("user_id")
+                );
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            //throw new InvalidSQLException("An error occurred when tyring to save to the database.");
+            e.printStackTrace();
+        } finally {
+            if(con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return orders;
+    }
+
+    public List<Order> getAllOrdersByLeastExpensive() {
+        List<Order> orders = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = ConnectionFactory.getInstance().getConnection();
+            Statement stmt = con.createStatement();
+            String sqlStr = "select * from orders order by grand_total asc";
+            ResultSet rs = stmt.executeQuery(sqlStr);
+            while (rs.next()) {
+                Order order = new Order(
+                        rs.getString("id"),
+                        rs.getFloat("subTotal"),
+                        rs.getFloat("tax"),
+                        rs.getFloat("grand_total"),
+                        rs.getDate("orderedDate"),
+                        rs.getBoolean("status"),
+                        rs.getString("user_id")
+                );
+                orders.add(order);
+            }
+        } catch (SQLException e) {
+            //throw new InvalidSQLException("An error occurred when tyring to save to the database.");
+            e.printStackTrace();
+        } finally {
+            if(con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return orders;
     }
 }

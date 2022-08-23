@@ -10,9 +10,11 @@ import com.revature.urbooks.ui.LoginMenu;
 
 public class Main {
     public static void main(String[] args) {
+
         new LoginMenu(new UserService(new UserDAO())).start();
     }
 }
+
 
 
 

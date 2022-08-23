@@ -64,4 +64,9 @@ public class UserService {
         if (!password.equals(password2)) throw new InvalidUserException("\nPassword do not match :(");
         return true;
     }
+
+    public List<User> searchUserFirstAndLast(String firstName, String lastName) {
+
+        return userDAO.searchUserFirstAndLast(firstName, lastName);
+    }
 }

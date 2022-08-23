@@ -177,4 +177,45 @@ public class UserDAO implements CrudDAO<User> {
 
 
     }
+
+    public List<User> searchUserFirstAndLast(String firstName, String lastName) {
+        List<User> users = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = ConnectionFactory.getInstance().getConnection();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE firstname like '%Joh%' or lastName like '%Nguye%'");
+            //ps.setString(1, firstName);
+            //ps.setString(2, lastName);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next()) {
+                User user = new User(
+                        rs.getString("id"),
+                        rs.getString("username"),
+                        rs.getString("password"),
+                        rs.getString("role"),
+                        rs.getString("email"),
+                        rs.getString("phone"),
+                        rs.getString("firstName"),
+                        rs.getString("lastName")
+                );
+                users.add(user);
+            }
+
+
+
+        } catch (SQLException e) {
+            throw new InvalidSQLException("An error occurred when tyring to save to the database.");
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+
+        return users;
+    }
 }

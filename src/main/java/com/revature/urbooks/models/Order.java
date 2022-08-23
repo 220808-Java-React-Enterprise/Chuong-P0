@@ -1,5 +1,7 @@
 package com.revature.urbooks.models;
 
+import java.sql.Date;
+
 public class Order {
     private String id;
     private double subTotal;
@@ -11,6 +13,8 @@ public class Order {
 
     private String userId;
 
+    private java.sql.Date sqlDate;
+
     public Order(String id, double subTotal, double tax, double grandTotal, User user) {
         this.id = id;
         this.subTotal = subTotal;
@@ -19,11 +23,20 @@ public class Order {
         this.user = user;
     }
 
-    public Order(String id, double subTotal, double tax, double grandTotal, boolean status, String usserId) {
+    public Date getSqlDate() {
+        return sqlDate;
+    }
+
+    public void setSqlDate(Date sqlDate) {
+        this.sqlDate = sqlDate;
+    }
+
+    public Order(String id, double subTotal, double tax, double grandTotal, java.sql.Date sqlDate, boolean status, String usserId) {
         this.id = id;
         this.subTotal = subTotal;
         this.tax = tax;
         this.grandTotal = grandTotal;
+        this.sqlDate = sqlDate;
         this.userId = usserId;
     }
 

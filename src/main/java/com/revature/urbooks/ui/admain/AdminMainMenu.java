@@ -26,13 +26,20 @@ public class AdminMainMenu implements IMenu {
         exit: {
             while (true) {
                 System.out.println("\nWelcome to the admin main menu " + user.getUsername() + "!");
-                System.out.println("[1] Manage all users");
-                System.out.println("[1] Manage all books");
+                System.out.println("[1] Manage users");
+                System.out.println("[1] Manage books");
+                System.out.println("[1] Manage Publisher");
                 System.out.println("[x] Log out!");
                 System.out.print("\nEnter: ");
 
                 switch (scan.nextLine()) {
                     case "1":
+                        new AdminUserMenu(user, new UserService(new UserDAO())).start();
+                        break;
+                    case "2":
+                        new AdminUserMenu(user, new UserService(new UserDAO())).start();
+                        break;
+                    case "3":
                         new AdminUserMenu(user, new UserService(new UserDAO())).start();
                         break;
                     case "x":
