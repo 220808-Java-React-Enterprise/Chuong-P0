@@ -75,7 +75,7 @@ public class ShoppingHomePage implements IMenu {
     }// end start()
 
     private void displayOrderedHistoryByLeastExpensive() {
-        List<Order> orders = orderHistoryService.getAllOrdersByLeastExpensive();
+        List<Order> orders = orderHistoryService.getAllOrdersByLeastExpensive(user.getId());
         System.out.println("Your least expensive ordered history " + user.getUsername());
         System.out.println("============================================");
         System.out.printf("%-50s%-30s%-30s%-30s%-30s%-20s\n",  "ORDER NUMBER",  "SUB TOTAL", "TAX", "GRAND TOTAL", "STATUS", "DATE");
@@ -86,9 +86,9 @@ public class ShoppingHomePage implements IMenu {
             }
             System.out.printf("%-50s%-30s%-30s%-30s%-30s%-20s\n",
                     o.getId(),
-                    o.getSubTotal(),
-                    o.getTax(),
-                    o.getGrandTotal(),
+                    String.format("%.2f", o.getSubTotal()),
+                    String.format("%.2f", o.getTax()),
+                    String.format("%.2f", o.getGrandTotal()),
                     status,
                     o.getSqlDate());
 
@@ -97,7 +97,7 @@ public class ShoppingHomePage implements IMenu {
     }
 
     private void displayOrderedHistoryByMostExpensive() {
-        List<Order> orders = orderHistoryService.getAllOrdersByMostExpensive();
+        List<Order> orders = orderHistoryService.getAllOrdersByMostExpensive(user.getId());
         System.out.println("Your most expensive ordered history " + user.getUsername());
         System.out.println("============================================");
         System.out.printf("%-50s%-30s%-30s%-30s%-30s%-20s\n",  "ORDER NUMBER",  "SUB TOTAL", "TAX", "GRAND TOTAL", "STATUS", "DATE");
@@ -108,9 +108,9 @@ public class ShoppingHomePage implements IMenu {
             }
             System.out.printf("%-50s%-30s%-30s%-30s%-30s%-20s\n",
                     o.getId(),
-                    o.getSubTotal(),
-                    o.getTax(),
-                    o.getGrandTotal(),
+                    String.format("%.2f", o.getSubTotal()),
+                    String.format("%.2f", o.getTax()),
+                    String.format("%.2f", o.getGrandTotal()),
                     status,
                     o.getSqlDate());
 
@@ -119,7 +119,7 @@ public class ShoppingHomePage implements IMenu {
     }
 
     private void displayOrderedHistoryByDateOldest() {
-        List<Order> orders = orderHistoryService.getAllOrdersByOldestDate();
+        List<Order> orders = orderHistoryService.getAllOrdersByOldestDate(user.getId());
         System.out.println("Your oldest ordered history " + user.getUsername());
         System.out.println("============================================");
         System.out.printf("%-50s%-30s%-30s%-30s%-30s%-20s\n",  "ORDER NUMBER",  "SUB TOTAL", "TAX", "GRAND TOTAL", "STATUS", "DATE");
@@ -130,9 +130,9 @@ public class ShoppingHomePage implements IMenu {
             }
             System.out.printf("%-50s%-30s%-30s%-30s%-30s%-20s\n",
                     o.getId(),
-                    o.getSubTotal(),
-                    o.getTax(),
-                    o.getGrandTotal(),
+                    String.format("%.2f", o.getSubTotal()),
+                    String.format("%.2f", o.getTax()),
+                    String.format("%.2f", o.getGrandTotal()),
                     status,
                     o.getSqlDate());
 
@@ -141,7 +141,7 @@ public class ShoppingHomePage implements IMenu {
     }
 
     private void displayOrderedHistoryByDateLatest() {
-        List<Order> orders = orderHistoryService.getAllOrdersByLatestDate();
+        List<Order> orders = orderHistoryService.getAllOrdersByLatestDate(user.getId());
         System.out.println("Your latest ordered history " + user.getUsername());
         System.out.println("============================================");
         System.out.printf("%-50s%-30s%-30s%-30s%-30s%-20s\n",  "ORDER NUMBER",  "SUB TOTAL", "TAX", "GRAND TOTAL", "STATUS", "DATE");
@@ -152,9 +152,9 @@ public class ShoppingHomePage implements IMenu {
             }
             System.out.printf("%-50s%-30s%-30s%-30s%-30s%-20s\n",
                     o.getId(),
-                    o.getSubTotal(),
-                    o.getTax(),
-                    o.getGrandTotal(),
+                    String.format("%.2f", o.getSubTotal()),
+                    String.format("%.2f", o.getTax()),
+                    String.format("%.2f", o.getGrandTotal()),
                     status,
                     o.getSqlDate());
 
@@ -173,9 +173,9 @@ public class ShoppingHomePage implements IMenu {
             }
             System.out.printf("%-50s%-30s%-30s%-30s%-20s\n",
                     o.getId(),
-                    o.getSubTotal(),
-                    o.getTax(),
-                    o.getGrandTotal(),
+                    String.format("%.2f", o.getSubTotal()),
+                    String.format("%.2f", o.getTax()),
+                    String.format("%.2f", o.getGrandTotal()),
                     status);
 
 

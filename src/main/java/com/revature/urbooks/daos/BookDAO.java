@@ -6,10 +6,7 @@ import com.revature.urbooks.utils.custom_exceptions.InvalidSQLException;
 import com.revature.urbooks.utils.database.ConnectionFactory;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +18,25 @@ public class BookDAO implements CrudDAO<Book>{
 
     @Override
     public void update(Book obj) {
-
+        Connection con = null;
+        try {
+            con = ConnectionFactory.getInstance().getConnection();
+            String sql = "update books set quantity = ? where id = ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, obj.getQuantity());
+            ps.setString(2, obj.getId());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new InvalidSQLException("An error occurred when tyring to save to the database.");
+        } finally {
+            if(con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     @Override

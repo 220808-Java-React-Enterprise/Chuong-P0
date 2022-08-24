@@ -79,7 +79,7 @@ public class ShoppingMenu implements IMenu{
                     count++ + ". ",
                     e.getValue().getIsbn(),
                     e.getValue().getTitle(),
-                    e.getValue().getPrice(),
+                    String.format("%.2f", e.getValue().getPrice()),
                     e.getValue().getQuantity());
         }//end for loop
 
@@ -207,7 +207,7 @@ public class ShoppingMenu implements IMenu{
                     i+1 + ". ",
                     book.getIsbn(),
                     book.getTitle(),
-                    book.getPrice(),
+                    String.format("%.2f", book.getPrice()),
                     book.getQuantity());
         }
     }

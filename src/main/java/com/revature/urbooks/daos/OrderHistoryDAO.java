@@ -74,13 +74,13 @@ public class OrderHistoryDAO implements CrudDAO<Order>{
         return null;
     }
 
-    public List<Order> getAllOrdersByLatestDate() {
+    public List<Order> getAllOrdersByLatestDate(String userId) {
         List<Order> orders = new ArrayList<>();
         Connection con = null;
         try {
             con = ConnectionFactory.getInstance().getConnection();
             Statement stmt = con.createStatement();
-            String sqlStr = "select * from orders order by orderedDate desc";
+            String sqlStr = "select * from orders where user_id = '" + userId + "' order by orderedDate desc";
             ResultSet rs = stmt.executeQuery(sqlStr);
             while (rs.next()) {
                 Order order = new Order(
@@ -109,13 +109,13 @@ public class OrderHistoryDAO implements CrudDAO<Order>{
         return orders;
     }
 
-    public List<Order> getAllOrdersByOldestDate() {
+    public List<Order> getAllOrdersByOldestDate(String userId) {
         List<Order> orders = new ArrayList<>();
         Connection con = null;
         try {
             con = ConnectionFactory.getInstance().getConnection();
             Statement stmt = con.createStatement();
-            String sqlStr = "select * from orders order by orderedDate asc";
+            String sqlStr = "select * from orders where user_id = '" + userId + "' order by orderedDate asc";
             ResultSet rs = stmt.executeQuery(sqlStr);
             while (rs.next()) {
                 Order order = new Order(
@@ -144,13 +144,13 @@ public class OrderHistoryDAO implements CrudDAO<Order>{
         return orders;
     }
 
-    public List<Order> getAllOrdersByMostExpensive() {
+    public List<Order> getAllOrdersByMostExpensive(String userId) {
         List<Order> orders = new ArrayList<>();
         Connection con = null;
         try {
             con = ConnectionFactory.getInstance().getConnection();
             Statement stmt = con.createStatement();
-            String sqlStr = "select * from orders order by grand_total desc";
+            String sqlStr = "select * from orders where user_id = '" + userId + "' order by orderedDate asc";
             ResultSet rs = stmt.executeQuery(sqlStr);
             while (rs.next()) {
                 Order order = new Order(
@@ -179,13 +179,13 @@ public class OrderHistoryDAO implements CrudDAO<Order>{
         return orders;
     }
 
-    public List<Order> getAllOrdersByLeastExpensive() {
+    public List<Order> getAllOrdersByLeastExpensive(String userId) {
         List<Order> orders = new ArrayList<>();
         Connection con = null;
         try {
             con = ConnectionFactory.getInstance().getConnection();
             Statement stmt = con.createStatement();
-            String sqlStr = "select * from orders order by grand_total asc";
+            String sqlStr = "select * from orders where user_id = '" + userId + "' order by orderedDate asc";
             ResultSet rs = stmt.executeQuery(sqlStr);
             while (rs.next()) {
                 Order order = new Order(

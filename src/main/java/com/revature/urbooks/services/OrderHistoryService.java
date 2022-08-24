@@ -17,19 +17,19 @@ public class OrderHistoryService {
         return orderHistoryDAO.getAllOrders(userId);
     }
 
-    public List<Order> getAllOrdersByLatestDate() {
-        return orderHistoryDAO.getAllOrdersByLatestDate();
+    public List<Order> getAllOrdersByLatestDate(String userId) {
+        return orderHistoryDAO.getAllOrdersByLatestDate(userId);
     }
 
-    public List<Order> getAllOrdersByOldestDate() {
-        return orderHistoryDAO.getAllOrdersByOldestDate();
+    public List<Order> getAllOrdersByOldestDate(String userId) {
+        return orderHistoryDAO.getAllOrdersByOldestDate(userId);
     }
 
-    public List<Order> getAllOrdersByMostExpensive() {
-        return orderHistoryDAO.getAllOrdersByMostExpensive();
+    public List<Order> getAllOrdersByMostExpensive(String userId) {
+        return orderHistoryDAO.getAllOrdersByMostExpensive(userId);
     }
 
-    public List<Order> getAllOrdersByLeastExpensive() {
-        return orderHistoryDAO.getAllOrdersByLeastExpensive();
+    public List<Order> getAllOrdersByLeastExpensive(String userId) {
+        return orderHistoryDAO.getAllOrdersByLeastExpensive(userId);
     }
 }

@@ -89,9 +89,9 @@ public class OrderMenu implements IMenu{
         Scanner scan = new Scanner(System.in);
         System.out.println("\nUR Bookstore checkout summary page - " + user.getUsername() + "!");
         System.out.println("Order id: " + order.getId());
-        System.out.println("Subtotal: " + order.getSubTotal());
-        System.out.println("Tax: " + order.getTax());
-        System.out.println("Grand Total: " + order.getGrandTotal());
+        System.out.println("Subtotal: " + String.format("%.2f", order.getSubTotal()));
+        System.out.println("Tax: " + String.format("%.2f", order.getTax()));
+        System.out.println("Grand Total: " + String.format("%.2f", order.getGrandTotal()));
         System.out.println("");
         System.out.println("Thank you for shopping with UR Books");
 

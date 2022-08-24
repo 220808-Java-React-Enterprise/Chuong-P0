@@ -14,6 +14,11 @@ CMD ["java", "-jar", "Maven-1.0-SNAPSHOT.jar"]
 #   docker run --name linkcontainer --link postgres-db myApp
 
 #   docker build -t urbooks .
-#  docker run --name urbooks --link 180808bc3693 -it  urbooks
+#  docker run --name urbooks(name of this container) --link 180808bc3693(is the container id of postgresql) -it  urbooks(image name when using the build .)
 
 # src/main/resources/db.properties
+
+# to restart a stoped container with interactive mode
+#  docker start -ai urbooks
+
+#  docker start -ai urbooks2

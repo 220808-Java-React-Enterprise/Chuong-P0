@@ -29,15 +29,5 @@ public class BookServiceTest {
         bookService = new BookService(new BookDAO());
 
     }
-    @Test
-    public void get_all_the_books() {
-        when(crudDAO.getAll()).thenReturn(new ArrayList<Book>());
-        List<Book> books = bookService.getAll();
-        boolean result = false;
-        if(books.size() == 0) {
-            result = true;
-        }
 
-        assertTrue(result);
-    }
 }

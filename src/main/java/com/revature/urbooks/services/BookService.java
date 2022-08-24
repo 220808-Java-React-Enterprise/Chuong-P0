@@ -21,4 +21,8 @@ public class BookService {
     public List<Book> getAll() {
         return this.bookDAO.getAll();
     }
+
+    public void update(Book selectedBook) {
+        bookDAO.update(selectedBook);
+    }
 }
