@@ -4,7 +4,6 @@ public class Book {
     private String id;
     private String isbn;
     private String title;
-    private String publisher_name;
     private String publisher_id;
     private double  price;
     private int quantity;
@@ -13,11 +12,10 @@ public class Book {
 
     }
 
-    public Book(String id, String isbn, String title, String publisher_name, String publisher_id, double price, int quantity) {
+    public Book(String id, String isbn, String title, String publisher_id, double price, int quantity) {
         this.id = id;
         this.isbn = isbn;
         this.title = title;
-        this.publisher_name = publisher_name;
         this.publisher_id = publisher_id;
         this.price = price;
         this.quantity = quantity;
@@ -45,14 +43,6 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getPublisher_name() {
-        return publisher_name;
-    }
-
-    public void setPublisher_name(String publisher_name) {
-        this.publisher_name = publisher_name;
     }
 
     public String getPublisher_id() {
@@ -85,7 +75,6 @@ public class Book {
                 "id='" + id + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", title='" + title + '\'' +
-                ", publisher_name='" + publisher_name + '\'' +
                 ", publisher_id='" + publisher_id + '\'' +
                 ", price=" + price +
                 ", quantity=" + quantity +

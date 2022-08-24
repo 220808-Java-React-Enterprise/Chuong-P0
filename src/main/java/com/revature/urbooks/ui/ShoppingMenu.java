@@ -71,13 +71,14 @@ public class ShoppingMenu implements IMenu{
 
     private void viewCart(Map<String, Book> cart) {
         Scanner scan = new Scanner(System.in);
-        System.out.println("\nWelcome to UR Bookstore cart page - " + user.getUsername() + "!");
-        System.out.printf("%-30s%-30s%-30s%-30s%-20s\n", "ISBN", "BOOK TITLE", "PUBLISHER", "PRICE", "QUANTITY");
+        System.out.printf("%-10s%-30s%-30s%-30s%-20s\n", "ITEM #",  "ISBN          ",  "BOOK TITLE     ", "PRICE          ", "QUANTITY       ");
+        System.out.printf("%-5s%-30s%-30s%-30s%-20s\n",  "=====",   "===============", "===============", "===============", "===============");
+        int count = 1;
         for (Map.Entry<String, Book> e : cart.entrySet()) {
-            System.out.printf("%-30s%-30s%-30s%-30s%-20s\n",
+            System.out.printf("%-5s%-30s%-30s%-30s%-20s\n",
+                    count++ + ". ",
                     e.getValue().getIsbn(),
                     e.getValue().getTitle(),
-                    e.getValue().getPublisher_name(),
                     e.getValue().getPrice(),
                     e.getValue().getQuantity());
         }//end for loop
@@ -161,7 +162,6 @@ public class ShoppingMenu implements IMenu{
                 product.getId(),
                 product.getIsbn(),
                 product.getTitle(),
-                product.getPublisher_name(),
                 product.getPublisher_id(),
                 product.getPrice(),
                 0);
@@ -198,16 +198,15 @@ public class ShoppingMenu implements IMenu{
     }
     private void displayAllBooks() {
         System.out.println("\nAll programming books...");
-        System.out.printf("%-30s%-30s%-30s%-30s%-30s%-20s\n",  "ISBN",  "BOOK TITLE", "PUBLISHER", "PUBLISHER ID", "PRICE", "QUANTITY");
-        System.out.printf("%-30s%-30s%-30s%-30s%-30s%-20s\n",  "=====", "===========", "=========", "============", "=====", "========");
+        System.out.printf("%-10s%-30s%-30s%-30s%-20s\n", "ITEM #",  "ISBN          ",  "BOOK TITLE     ", "PRICE          ", "QUANTITY       ");
+        System.out.printf("%-5s%-30s%-30s%-30s%-20s\n",  "=====",   "===============", "===============", "===============", "===============");
         System.out.println("");
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-            System.out.printf("%-30s%-30s%-30s%-30s%-30s%-20s\n",
-                    i+1 + ". " + book.getIsbn(),
+            System.out.printf("%-5s%-30s%-30s%-30s%-20s\n",
+                    i+1 + ". ",
+                    book.getIsbn(),
                     book.getTitle(),
-                    book.getPublisher_name(),
-                    book.getPublisher_id(),
                     book.getPrice(),
                     book.getQuantity());
         }

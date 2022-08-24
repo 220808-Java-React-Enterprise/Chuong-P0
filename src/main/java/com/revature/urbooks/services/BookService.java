@@ -7,6 +7,7 @@ import com.revature.urbooks.models.Book;
 import java.util.List;
 
 public class BookService {
+
     private final BookDAO bookDAO;
 
     public BookService(BookDAO bookDAO) {
@@ -15,5 +16,9 @@ public class BookService {
 
     public List<Book> getAllBooks() {
         return this.bookDAO.getAllBooks();
+    }
+
+    public List<Book> getAll() {
+        return this.bookDAO.getAll();
     }
 }

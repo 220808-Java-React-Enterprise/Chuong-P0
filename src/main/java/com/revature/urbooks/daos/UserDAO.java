@@ -72,7 +72,45 @@ public class UserDAO implements CrudDAO<User> {
 
     @Override
     public List<User> getAll() {
-        return null;
+        List<User> users = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = ConnectionFactory.getInstance().getConnection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from users");
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String username =  rs.getString("username");
+                String role = rs.getString("role");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String firstName = rs.getString("firstName");
+                String lastName = rs.getString("lastName");
+
+                User user = new User();
+                user.setId(id);
+                user.setUsername(username);
+                user.setRole(role);
+                user.setEmail(email);
+                user.setPhone(phone);
+                user.setFirstName(firstName);
+                user.setLastName(lastName);
+
+                users.add(user);
+            }
+
+            return users;
+        } catch (SQLException e) {
+            throw new InvalidSQLException("An error occurred when tyring to save to the database.");
+        } finally {
+            if(con != null) {
+                try {
+                    con.close();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     public String getUsername(String username) {

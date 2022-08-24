@@ -8,6 +8,7 @@ import com.revature.urbooks.utils.database.ConnectionFactory;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,25 @@ public class OrderDetailDAO implements CrudDAO{
                 ps.setInt(3, m.getValue().getQuantity());
                 ps.setBoolean(4, false);
                 ps.executeUpdate();
+            }
+
+            for(Map.Entry<String, Book> m : map.entrySet()) {
+                PreparedStatement ps = con.prepareStatement("update books set quantity = ? where id = ?");
+                PreparedStatement ps2 = con.prepareStatement("select quantity from books where id = ?");
+
+                ps2.setString(1, m.getValue().getId());
+                int inventoryQuantity = 0;
+                ResultSet rs = ps2.executeQuery();
+                if(rs.next()) {
+                    inventoryQuantity = rs.getInt("quantity");
+                }
+
+
+                ps.setInt(1, inventoryQuantity - m.getValue().getQuantity());
+                ps.setString(2, m.getValue().getId());
+
+                ps.executeUpdate();
+
             }
 
         } catch (SQLException e) {

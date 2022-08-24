@@ -86,8 +86,9 @@ public class AdminUserMenu implements IMenu {
     private void displaySearchedUser(List<User> users) {
         System.out.println("Searched Users");
         System.out.println("================================================");
+        int count = 1;
         for(User u : users) {
-            System.out.printf("%-22s%-22s%-22s%-22s%-22s%-22s\n", 1 + ". " + u.getUsername(),  u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhone(), u.getRole());
+            System.out.printf("%-22s%-22s%-22s%-22s%-22s%-22s\n", count++ + ". " + u.getUsername(),  u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhone(), u.getRole());
             System.out.println("");
         }
     }
@@ -99,10 +100,11 @@ public class AdminUserMenu implements IMenu {
 
     private void displayUsersList() {
         List<User> users = userService.getAllUsers();
+        int count = 1;
         System.out.println("All Users");
         System.out.println("================================================");
         for(User u : users) {
-            System.out.printf("%-22s%-22s%-22s%-22s%-22s%-22s\n", 1 + ". " + u.getUsername(),  u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhone(), u.getRole());
+            System.out.printf("%-22s%-22s%-22s%-22s%-22s%-22s\n", count++ + ". " + u.getUsername(),  u.getFirstName(), u.getLastName(), u.getEmail(), u.getPhone(), u.getRole());
             System.out.println("");
         }
     }

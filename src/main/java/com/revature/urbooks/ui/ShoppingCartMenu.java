@@ -60,7 +60,7 @@ public class ShoppingCartMenu implements IMenu{
         System.out.println("");
         for (int i = 0; i < books.size(); i++) {
             Book book = books.get(i);
-            System.out.printf("%-30s%-30s%-30s%-30s%-30s%-20s\n", i+1 + ". " + book.getIsbn(),  book.getTitle(), book.getPublisher_name(), book.getPublisher_id(), book.getPrice(), book.getQuantity());
+            System.out.printf("%-30s%-30s%-30s%-30s%-30s%-20s\n", i+1 + ". " + book.getIsbn(),  book.getTitle(), book.getPublisher_id(), book.getPrice(), book.getQuantity());
         }
 
         try {
